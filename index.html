@@ -1,12 +1,501 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sirena Apps</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sirena Apps - 100 Questions Permis Pratique</title>
+  <meta name="description" content="Préparez votre permis pratique avec l'application 100 Questions Permis Pratique." />
+  <style>
+    :root {
+      --bg: #f5f8ff;
+      --bg-soft: #eaf1ff;
+      --card: #ffffff;
+      --primary: #7ea6ff;
+      --primary-dark: #4c7ef3;
+      --text: #1f2a44;
+      --muted: #6f7a94;
+      --success: #31b86b;
+      --shadow: 0 10px 30px rgba(92, 122, 184, 0.12);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, #eef4ff 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 24px 0;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #8fb4ff, #bdd2ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+      font-size: 28px;
+    }
+
+    .brand h1 {
+      font-size: 1.4rem;
+      margin-bottom: 2px;
+    }
+
+    .brand p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-weight: bold;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary-dark);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--primary-dark);
+      border: 1px solid #d9e5ff;
+    }
+
+    .hero {
+      padding: 24px 0 60px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #fff3d9;
+      color: #b57d00;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    .hero h2 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      margin-bottom: 28px;
+      max-width: 620px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .hero-points {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: white;
+      padding: 12px 16px;
+      border-radius: 999px;
+      color: var(--text);
+      box-shadow: var(--shadow);
+      font-size: 0.95rem;
+    }
+
+    .phone-card {
+      background: var(--card);
+      border-radius: 36px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      max-width: 360px;
+      margin-left: auto;
+    }
+
+    .phone-screen {
+      background: linear-gradient(180deg, #f7faff 0%, #edf4ff 100%);
+      border-radius: 28px;
+      padding: 22px;
+      min-height: 610px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: #f1e9d8;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+
+    .progress span {
+      display: block;
+      width: 56%;
+      height: 100%;
+      background: #eba11b;
+      border-radius: 999px;
+    }
+
+    .mini-badge {
+      display: inline-block;
+      background: #fff5df;
+      color: #d18a00;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-weight: bold;
+      margin-bottom: 18px;
+      font-size: 0.9rem;
+    }
+
+    .question-card {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      font-size: 1.15rem;
+      font-weight: bold;
+      box-shadow: 0 10px 25px rgba(140, 164, 214, 0.15);
+      margin-bottom: 18px;
+    }
+
+    .answer {
+      background: #eef1f5;
+      border-radius: 18px;
+      padding: 18px;
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 14px;
+      color: #2d3447;
+    }
+
+    .answer.good {
+      background: #1ec154;
+      color: white;
+    }
+
+    .explanation {
+      background: #dff5e7;
+      color: #26734b;
+      border-radius: 20px;
+      padding: 18px;
+      font-size: 0.95rem;
+      margin-top: 10px;
+    }
+
+    section {
+      padding: 34px 0 60px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 14px;
+      font-size: 2rem;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--muted);
+      max-width: 760px;
+      margin: 0 auto 36px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 26px;
+      box-shadow: var(--shadow);
+    }
+
+    .feature-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: var(--bg-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.15rem;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+    }
+
+    .about-box {
+      background: white;
+      border-radius: 30px;
+      padding: 34px;
+      box-shadow: var(--shadow);
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about-box p {
+      color: var(--muted);
+      margin-top: 14px;
+    }
+
+    .cta-box {
+      background: linear-gradient(135deg, #8eb3ff, #c3d6ff);
+      border-radius: 30px;
+      padding: 42px 28px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box h3 {
+      font-size: 2rem;
+      margin-bottom: 14px;
+    }
+
+    .cta-box p {
+      max-width: 700px;
+      margin: 0 auto 22px;
+      color: #2a3d69;
+    }
+
+    footer {
+      padding: 30px 0 50px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    footer a {
+      color: var(--primary-dark);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .phone-card {
+        margin: 0 auto;
+      }
+
+      .hero {
+        padding-top: 10px;
+      }
+
+      .hero h2,
+      .hero p {
+        text-align: left;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Sirena Apps</h1>
-  <p>100 Questions Permis Pratique</p>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo">🚗</div>
+        <div>
+          <h1>Sirena Apps</h1>
+          <p>Applications utiles et simples pour réussir.</p>
+        </div>
+      </div>
+      <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.ariel.revisionpermis" target="_blank">
+        Télécharger l'app
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">✨ Prépare ton permis pratique plus sereinement</div>
+          <h2>100 Questions Permis Pratique</h2>
+          <p>
+            Une application simple, claire et efficace pour t’entraîner aux questions
+            du permis pratique. Révise à ton rythme, teste tes connaissances et gagne
+            en confiance avant le jour J.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.ariel.revisionpermis" target="_blank">
+              Voir sur Google Play
+            </a>
+            <a class="btn btn-secondary" href="mailto:sirena.apps.contact@gmail.com">
+              Contacter Sirena Apps
+            </a>
+          </div>
+
+          <div class="hero-points">
+            <div class="pill">🎁 100% gratuit</div>
+            <div class="pill">🔓 Sans inscription</div>
+            <div class="pill">🛡️ Utilisation simple</div>
+          </div>
+        </div>
+
+        <div class="phone-card">
+          <div class="phone-screen">
+            <div class="progress"><span></span></div>
+            <div class="mini-badge">⚠️ Sécurité routière</div>
+
+            <div class="question-card">
+              Le triangle de pré-signalisation doit-il être utilisé sur autoroute ?
+            </div>
+
+            <div class="answer">Oui, dans tous les cas</div>
+            <div class="answer good">Non</div>
+            <div class="answer">Oui, uniquement la nuit</div>
+
+            <div class="explanation">
+              <strong>Bonne réponse :</strong><br />
+              Sur autoroute, sortir pour installer le triangle est dangereux.
+              Il faut privilégier la mise en sécurité derrière la glissière.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 class="section-title">Pourquoi utiliser l’application ?</h2>
+        <p class="section-subtitle">
+          Une expérience simple et rassurante pour réviser les questions du permis pratique.
+        </p>
+
+        <div class="features">
+          <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3>Révision ciblée</h3>
+            <p>
+              Retrouve des questions utiles pour t’entraîner avant l’examen pratique.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Rapide et accessible</h3>
+            <p>
+              Pas de compte à créer : tu ouvres l’application et tu révises tout de suite.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">✅</div>
+            <h3>Simple à comprendre</h3>
+            <p>
+              Une interface claire, pensée pour aller droit au but et apprendre sans stress.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="about-box">
+          <h2>À propos de Sirena Apps</h2>
+          <p>
+            Sirena Apps développe des applications utiles, simples et accessibles.
+            L’objectif : proposer des outils pratiques qui aident vraiment au quotidien,
+            avec une interface claire et agréable.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="cta-box">
+          <h3>Prêt(e) à réviser ?</h3>
+          <p>
+            Découvre l’application 100 Questions Permis Pratique et entraîne-toi
+            facilement avant ton examen.
+          </p>
+          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.ariel.revisionpermis" target="_blank">
+            Télécharger sur Google Play
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>
+        © 2026 Sirena Apps • Contact :
+        <a href="mailto:sirena.apps.contact@gmail.com">sirena.apps.contact@gmail.com</a>
+      </p>
+    </div>
+  </footer>
 </body>
 </html>
